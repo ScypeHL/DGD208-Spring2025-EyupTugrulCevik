@@ -13,7 +13,7 @@ namespace programming2final
         public int HungerScaling;
         public int SleepScaling;
         public int FunScaling;
-        
+
         public AnimaStruct(string type, string colour, int hungerScaling, int sleepScaling, int funScaling)
         {
             Type = type;
