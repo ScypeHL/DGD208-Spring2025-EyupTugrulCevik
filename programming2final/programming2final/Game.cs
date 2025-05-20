@@ -11,6 +11,12 @@ namespace Pro
     {
         public static Write wr = new Write();
         public static Render render = new Render();
+
+        public static int CurrentAnimal;
+        public static Dictionary<int, AnimaStruct> animalSelected;
+        public static Dictionary<int, float[]> animalStatus = new Dictionary<int, float[]>();
+
+        public static float Hunger;
         public Game()
         {
             

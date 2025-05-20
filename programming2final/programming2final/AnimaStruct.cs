@@ -13,6 +13,9 @@ namespace programming2final
         public int HungerScaling;
         public int SleepScaling;
         public int FunScaling;
+        public float Hunger;
+        public float Sleep;
+        public float Fun;
 
         public AnimaStruct(string type, string colour, int hungerScaling, int sleepScaling, int funScaling)
         {
@@ -21,6 +24,9 @@ namespace programming2final
             HungerScaling = hungerScaling;
             SleepScaling = sleepScaling;
             FunScaling = funScaling;
+            Hunger = 50;
+            Sleep = 50;
+            Fun = 50;
         }
 
     }

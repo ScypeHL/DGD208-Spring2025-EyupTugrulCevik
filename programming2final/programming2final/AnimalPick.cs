@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pro
 {
-    internal class AnimalPick
+    internal class AnimalPick : Game
     {
         private Dictionary<string, AnimaStruct> animaDict;
         
         private Gameplay gp;
         private Random rng = new Random();
-        private Colours colours;
         
         private List<AnimaStruct> animals;
         private List<string> animalsType;
@@ -31,6 +30,7 @@ namespace Pro
             animals = new List<AnimaStruct>();
             animalsType = new List<string>();
             animaDict = new Dictionary<string, AnimaStruct>();
+            animalSelected = new Dictionary<int, AnimaStruct>();
         }
 
         public void start()
@@ -99,7 +99,7 @@ namespace Pro
         {
             for (int i = 0; i < animals.Count; i = i + 1)
             {
-                Console.Write($"[{animals[i].Colour} {animals[i].Type}] >");
+                Console.Write($"[{animals[i].Colour} {animals[i].Type}] >");              
                 if (animals[i].FunScaling <= 80) { Console.Write(" | Gets bored quickly"); }
                 if (animals[i].FunScaling >= 120) { Console.Write(" | Joyful"); }
                 if (animals[i].SleepScaling <= 80) { Console.Write(" | Sleeps a lot"); }
@@ -114,13 +114,26 @@ namespace Pro
         private void pickAnimal()
         {
             string animalName;
-            Console.WriteLine("Choose an animal by typing its name");
-            animalName = Console.ReadLine().ToLower();
-            if (animaDict.TryGetValue(animalName, out AnimaStruct pickedAnimal))
+            int animalCount = 3;
+            while (animalCount > 0)
             {
-                gp = new Gameplay(pickedAnimal);
+                Console.WriteLine("Choose an animal by typing its name");
+                animalName = Console.ReadLine().ToLower();
+
+                if (animaDict.TryGetValue(animalName, out AnimaStruct pickedAnimal))
+                {
+                    animals.Remove(pickedAnimal);
+                    animaDict.Remove(animalName);
+                    animalSelected[animalCount] = pickedAnimal;
+                    animalStatus[animalCount] = [pickedAnimal.Hunger, pickedAnimal.Sleep, pickedAnimal.Fun];
+                    printList(animals);
+                    animalCount = animalCount - 1;
+                    Console.WriteLine(animalCount);
+                }
+                else { Console.WriteLine("There is no such animal like that, please choose among existing options"); }
             }
-            else { Console.WriteLine("There is no such animal like that, please choose among existing options"); pickAnimal(); }
+            
+            gp = new Gameplay();
         }
     }
 }

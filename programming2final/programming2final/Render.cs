@@ -1,38 +1,43 @@
-﻿using System;
+﻿using programming2final;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace programming2final
+namespace Pro
 {
-    internal class Render
+    internal class Render : Game 
     {
-        private float hunger = 50;
-        private float sleep = 50;
-        private float fun = 50;
-
-        private int flowDelay = 1000;
+        private int flowDelay = 200;
+        private PlayerCommand playerCommand = new PlayerCommand();
 
         public Render()
         {
 
         }
 
-        public void logicFlow(bool SWITCH)
+        public void print()
         {
+            bool SWITCH = true;
             while (SWITCH)
             {
-                print();
+                if (animalSelected.TryGetValue(CurrentAnimal, out AnimaStruct _animal)) { }
+                if (animalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
 
-                Thread.Sleep(flowDelay);
                 Console.Clear();
-            }
-        }
+                Console.Write($"{_animal.Colour} {_animal.Type} Hunger:{animalStat[0]}| Sleep:{animalStat[1]}| Fun:{animalStat[2]}\n");
+                Console.WriteLine("");
+                Console.WriteLine("Press F to feed the animal");
+                Console.WriteLine("Press M to switch to another animal");
+                
+                
+                Thread.Sleep(flowDelay);
+                if (Console.ReadKey().Key == ConsoleKey.F) { playerCommand.feed(20); }
+                if (Console.ReadKey().Key == ConsoleKey.M) { playerCommand.move(); }
 
-        void print()
-        {
-            Console.Write($"Hunger:{hunger}| Sleep:{sleep}| Fun:{fun}\n");
+            }
         }
     }
 }
