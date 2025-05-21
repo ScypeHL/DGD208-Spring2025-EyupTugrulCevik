@@ -80,9 +80,9 @@ namespace Pro
             AnimaStruct Fish = new AnimaStruct("Fish", RandomColour<Colours>().ToString(), rng.Next(50, 151), rng.Next(50, 151), rng.Next(50, 151));
             animaDict["fish"] = Fish;
             animals.Add(Fish);
-            AnimaStruct Bunny = new AnimaStruct("Bunny", RandomColour<Colours>().ToString(), rng.Next(50, 151), rng.Next(50, 151), rng.Next(50, 151));
-            animaDict["bunny"] = Bunny;
-            animals.Add(Bunny);
+            AnimaStruct Rabbit = new AnimaStruct("Rabbit", RandomColour<Colours>().ToString(), rng.Next(50, 151), rng.Next(50, 151), rng.Next(50, 151));
+            animaDict["rabbit"] = Rabbit;
+            animals.Add(Rabbit);
             AnimaStruct Hamster = new AnimaStruct("Hamster", RandomColour<Colours>().ToString(), rng.Next(50, 151), rng.Next(50, 151), rng.Next(50, 151));
             animaDict["hamster"] = Hamster;
             animals.Add(Hamster);

@@ -9,45 +9,42 @@ namespace Pro
 {
     internal class PlayerCommand : Game
     {
+        public bool itemUsed = false;
         public PlayerCommand()
         {
         }
 
         public void read()
         {
-            string q1 = "";
-            q1 = Console.ReadLine();
-
-            switch (q1)
-            {
-                case "move":
-                    move();
-                    break;
-                case "use":
-                    break;
-                case "pet":
-                    break;
-                case "feed":
-                    feed(20);
-                    break;
-                default:
-                    break;
-            }
         }
 
         public void move()
         {
-            Console.WriteLine("Which animal you want to move to");
-            printAnimals();
+            switch (CurrentAnimal)
+            {
+                case 1:
+                    CurrentAnimal = 2;
+                    break;
+                case 2:
+                    CurrentAnimal = 3;
+                    break;
+                case 3:
+                    CurrentAnimal = 1;
+                    break;
+            }
+
         }
 
-        public void feed(int feedPoint)
+        public async Task feed(int feedPoint, int cooldown)
         {
             if (animalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
             if (animalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
 
+            itemUsed = true;
+            await Task.Delay(cooldown);
             animalStat[0] = animalStat[0] + feedPoint;
             Console.WriteLine($"You feed {animal.Type} and its hunger increased by {feedPoint}");
+            itemUsed = false;
         }
 
         public void printAnimals()

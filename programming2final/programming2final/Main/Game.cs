@@ -9,6 +9,8 @@ namespace Pro
 {
     internal class Game
     {
+        public static bool isProgramRunning = true;
+        
         public static Write wr = new Write();
         public static Render render = new Render();
 
@@ -16,7 +18,7 @@ namespace Pro
         public static Dictionary<int, AnimaStruct> animalSelected;
         public static Dictionary<int, float[]> animalStatus = new Dictionary<int, float[]>();
 
-        public static float Hunger;
+        public static List<ItemStruct> Inventory = new List<ItemStruct>();
         public Game()
         {
             
