@@ -9,14 +9,15 @@ namespace Pro
 {
     internal class Game
     {
-        public static bool isProgramRunning = true;
+        public static bool IsProgramRunning = true;
         
         public static Write wr = new Write();
-        public static Render render = new Render();
+        public static Render Render = new Render();
+        public static GetInput GetInput = new GetInput();
 
         public static int CurrentAnimal;
-        public static Dictionary<int, AnimaStruct> animalSelected;
-        public static Dictionary<int, float[]> animalStatus = new Dictionary<int, float[]>();
+        public static Dictionary<int, AnimaStruct> AnimalSelected;
+        public static Dictionary<int, float[]> AnimalStatus = new Dictionary<int, float[]>();
 
         public static List<ItemStruct> Inventory = new List<ItemStruct>();
         public Game()

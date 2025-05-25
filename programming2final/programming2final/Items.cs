@@ -13,7 +13,7 @@ namespace Pro
         private List<ItemStruct> _items = new List<ItemStruct>();
         public Items() { }
 
-        public void addItems()
+        public void AddItems()
         {
             BirdFood();
             FishFood();
@@ -30,9 +30,9 @@ namespace Pro
 
         private void applyItems()
         {
-            if (animalSelected.TryGetValue(1, out AnimaStruct animal1)) { }
-            if (animalSelected.TryGetValue(2, out AnimaStruct animal2)) { }
-            if (animalSelected.TryGetValue(3, out AnimaStruct animal3)) { }
+            if (AnimalSelected.TryGetValue(1, out AnimaStruct animal1)) { }
+            if (AnimalSelected.TryGetValue(2, out AnimaStruct animal2)) { }
+            if (AnimalSelected.TryGetValue(3, out AnimaStruct animal3)) { }
 
             foreach (var item in _items)
             {

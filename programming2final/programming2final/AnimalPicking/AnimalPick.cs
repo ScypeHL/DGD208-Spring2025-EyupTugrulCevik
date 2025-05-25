@@ -30,43 +30,43 @@ namespace Pro
             animals = new List<AnimaStruct>();
             animalsType = new List<string>();
             animaDict = new Dictionary<string, AnimaStruct>();
-            animalSelected = new Dictionary<int, AnimaStruct>();
+            AnimalSelected = new Dictionary<int, AnimaStruct>();
         }
 
         public void start()
         {
-            createList();
+            CreateList();
             sortby = new ListSortBy(animals, this);
 
             Console.WriteLine("Those are the animals in hand:");
-            printList(animals);
-            menu();
+            PrintList(animals);
+            Menu();
             
             
             // pickAnimal();
         }
 
-        private void menu()
+        private void Menu()
         {           
             Console.WriteLine("What do you want to do: [Sort, Choose]");
             switch (Console.ReadLine().ToLower())
             {
                 case "sort":
-                    sortList();
-                    menu();
+                    SortList();
+                    Menu();
                     break;
                 case "choose":
-                    pickAnimal();
+                    PickAnimal();
                     break;
                 default:
                     Console.WriteLine("Invalid command or input");
                     Console.WriteLine("");
-                    menu();
+                    Menu();
                     break;
             }
         }
 
-        void createList()
+        void CreateList()
         {
             AnimaStruct Parrot = new AnimaStruct("Parrot", RandomColour<Colours>().ToString(), rng.Next(50, 151), rng.Next(50, 151), rng.Next(50, 151));
             animaDict["parrot"] = Parrot;
@@ -89,13 +89,13 @@ namespace Pro
 
         }
 
-        private void sortList()
+        private void SortList()
         {
             sortby.chooseSortby();
-            printList(sortOption?.Invoke());
+            PrintList(sortOption?.Invoke());
         }
 
-        private void printList(List<AnimaStruct> animals)
+        private void PrintList(List<AnimaStruct> animals)
         {
             for (int i = 0; i < animals.Count; i = i + 1)
             {
@@ -111,7 +111,7 @@ namespace Pro
             Console.WriteLine("");
         }
 
-        private void pickAnimal()
+        private void PickAnimal()
         {
             string animalName;
             int animalCount = 3;
@@ -124,9 +124,9 @@ namespace Pro
                 {
                     animals.Remove(pickedAnimal);
                     animaDict.Remove(animalName);
-                    animalSelected[animalCount] = pickedAnimal;
-                    animalStatus[animalCount] = [pickedAnimal.Hunger, pickedAnimal.Sleep, pickedAnimal.Fun];
-                    printList(animals);
+                    AnimalSelected[animalCount] = pickedAnimal;
+                    AnimalStatus[animalCount] = [pickedAnimal.Hunger, pickedAnimal.Sleep, pickedAnimal.Fun];
+                    PrintList(animals);
                     animalCount = animalCount - 1;
                     Console.WriteLine(animalCount);
                 }

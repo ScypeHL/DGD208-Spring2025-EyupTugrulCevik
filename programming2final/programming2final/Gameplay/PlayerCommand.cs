@@ -9,7 +9,9 @@ namespace Pro
 {
     internal class PlayerCommand : Game
     {
+        public bool isBusy = false;
         public bool itemUsed = false;
+        public bool isFeeding = false;
         public PlayerCommand()
         {
         }
@@ -35,16 +37,35 @@ namespace Pro
 
         }
 
-        public async Task feed(int feedPoint, int cooldown)
+        async public void Feed(int feedPoint, int cooldown)
         {
-            if (animalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
-            if (animalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
+            isFeeding = true;
 
-            itemUsed = true;
+            if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
+            if (AnimalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
+
             await Task.Delay(cooldown);
             animalStat[0] = animalStat[0] + feedPoint;
             Console.WriteLine($"You feed {animal.Type} and its hunger increased by {feedPoint}");
-            itemUsed = false;
+            isFeeding = false;
+        }
+
+        async public void InventoryController(int numberInput)
+        {
+            if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
+
+            if (Inventory[numberInput].CanBeUsedOn == animal.Type) 
+            { 
+                animal.Hunger = animal.Hunger + Inventory[numberInput].HungerIncrease;
+                animal.Sleep = animal.Sleep + Inventory[numberInput].SleepIncrease;
+                animal.Fun = animal.Fun + Inventory[numberInput].FunIncrease;
+                await Task.Delay(5000);
+            }
+        }
+        
+        public void events()
+        {
+
         }
 
         public void printAnimals()
@@ -53,7 +74,7 @@ namespace Pro
             
             for (int i = 1; i <= 3; i = i + 1)
             {
-                if (animalSelected.TryGetValue(i, out AnimaStruct _animal)) { Console.WriteLine(_animal.Type); }
+                if (AnimalSelected.TryGetValue(i, out AnimaStruct _animal)) { Console.WriteLine(_animal.Type); }
             }
         }
     }

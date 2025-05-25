@@ -14,14 +14,14 @@ namespace Pro
         public Gameplay()
         {
             CurrentAnimal = 1;
-            flow();
+            Flow();
         }
 
-        private void flow()
+        private void Flow()
         {
             Console.Clear();
-            items.addItems();
-            render.flow();
+            items.AddItems();
+            Render.Flow();
         }
     }
 }
