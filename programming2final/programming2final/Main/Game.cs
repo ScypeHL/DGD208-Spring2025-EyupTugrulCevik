@@ -13,9 +13,10 @@ namespace Pro
         
         public static Write wr = new Write();
         public static Render Render = new Render();
-        public static GetInput GetInput = new GetInput();
 
         public static int CurrentAnimal;
+        public static float DifficultyMultiplier;
+
         public static Dictionary<int, AnimaStruct> AnimalSelected;
         public static Dictionary<int, float[]> AnimalStatus = new Dictionary<int, float[]>();
 

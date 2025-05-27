@@ -9,7 +9,7 @@ namespace Pro
 {
     internal class Gameplay : Game
     {
-        private Items items = new Items();
+        private Items Items = new Items();
 
         public Gameplay()
         {
@@ -20,7 +20,7 @@ namespace Pro
         private void Flow()
         {
             Console.Clear();
-            items.AddItems();
+            Items.AddItems();
             Render.Flow();
         }
     }

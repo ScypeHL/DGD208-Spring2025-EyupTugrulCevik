@@ -7,8 +7,10 @@ namespace Pro
         static void Main(string[] args)
         {
             Game game = new Game();
-            AnimalPick animalPick = new AnimalPick();
-            animalPick.start();
+            
+            MainMenu menu = new MainMenu();
+            menu.MainFlow();
+            
         }
     }
 }

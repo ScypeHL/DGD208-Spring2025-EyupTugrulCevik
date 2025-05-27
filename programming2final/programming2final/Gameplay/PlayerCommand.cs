@@ -12,6 +12,9 @@ namespace Pro
         public bool isBusy = false;
         public bool itemUsed = false;
         public bool isFeeding = false;
+        public bool isExecutingAnEvent = false;
+
+        public string[] behaviours = {"pet the animal", "send the animal to sleep", "play with the animal"};
         public PlayerCommand()
         {
         }
@@ -22,19 +25,8 @@ namespace Pro
 
         public void move()
         {
-            switch (CurrentAnimal)
-            {
-                case 1:
-                    CurrentAnimal = 2;
-                    break;
-                case 2:
-                    CurrentAnimal = 3;
-                    break;
-                case 3:
-                    CurrentAnimal = 1;
-                    break;
-            }
-
+            if (CurrentAnimal >= 3) { CurrentAnimal = 1; }
+            else { CurrentAnimal = CurrentAnimal + 1; }
         }
 
         async public void Feed(int feedPoint, int cooldown)
@@ -48,27 +40,59 @@ namespace Pro
             animalStat[0] = animalStat[0] + feedPoint;
             Console.WriteLine($"You feed {animal.Type} and its hunger increased by {feedPoint}");
             isFeeding = false;
+            isBusy = false;
         }
 
         async public void InventoryController(int numberInput)
         {
             if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
+            if (AnimalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
 
-            if (Inventory[numberInput].CanBeUsedOn == animal.Type) 
+            if (Inventory[numberInput - 1].CanBeUsedOn == animal.Type.ToLower()) 
             { 
-                animal.Hunger = animal.Hunger + Inventory[numberInput].HungerIncrease;
-                animal.Sleep = animal.Sleep + Inventory[numberInput].SleepIncrease;
-                animal.Fun = animal.Fun + Inventory[numberInput].FunIncrease;
+                isFeeding = true;
                 await Task.Delay(5000);
+                animalStat[0] = animalStat[0] + Inventory[numberInput - 1].HungerIncrease;
+                animalStat[1] = animalStat[1] + Inventory[numberInput - 1].SleepIncrease;
+                animalStat[2] = animalStat[2] + Inventory[numberInput - 1].FunIncrease;
+                isFeeding = false;
+                isBusy = false;
             }
         }
         
-        public void events()
+        async public void EventController(int numberInput)
         {
+            if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
+            if (AnimalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
 
+            switch (numberInput)
+            {
+                case 1:
+                    EventHandler(2000, 0, -1, 5);
+                    break;
+                case 2:
+                    EventHandler(12000, -5, 30, 0);
+                    break;
+                case 3:
+                    EventHandler(5000, -4, -4, 15);
+                    break;
+            }
+
+            async void EventHandler(int delay, int hungerIncrease, int sleepIncrease, int funIncrease)
+            {
+                isExecutingAnEvent = true;
+                await Task.Delay(delay);
+                
+                animalStat[0] = animalStat[0] + hungerIncrease;
+                animalStat[1] = animalStat[1] + sleepIncrease;
+                animalStat[2] = animalStat[2] + funIncrease;
+
+                isBusy = false;
+                isExecutingAnEvent = false;
+            }
         }
 
-        public void printAnimals()
+        public void PrintAnimals()
         {
             Console.WriteLine("");
             

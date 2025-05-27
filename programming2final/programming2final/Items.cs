@@ -36,7 +36,7 @@ namespace Pro
 
             foreach (var item in _items)
             {
-                if (item.CanBeUsedOn == animal1.Type)
+                if (item.CanBeUsedOn == animal1.Type.ToLower())
                 {
                     Inventory.Add(item);
                 }
@@ -44,7 +44,7 @@ namespace Pro
 
             foreach (var item in _items)
             {
-                if (item.CanBeUsedOn == animal2.Type)
+                if (item.CanBeUsedOn == animal2.Type.ToLower())
                 {
                     Inventory.Add(item);
                 }
@@ -52,7 +52,7 @@ namespace Pro
 
             foreach (var item in _items)
             {
-                if (item.CanBeUsedOn == animal3.Type)
+                if (item.CanBeUsedOn == animal3.Type.ToLower())
                 {
                     Inventory.Add(item);
                 }
@@ -62,39 +62,39 @@ namespace Pro
         #region Foods
         private void BirdFood()
         {
-            ItemStruct birdFood = new ItemStruct("BirdFood", "A mineral rich meal for your birds", 20, -5, 5,  "Parrot" );
+            ItemStruct birdFood = new ItemStruct("BirdFood", "A mineral rich meal for your birds", 20, -5, 5,  "parrot" );
             items["birdfood"] = birdFood;
             _items.Add(birdFood);
         }
         private void FishFood()
         {
-            ItemStruct fishFood = new ItemStruct("FishFood", "A mineral rich meal for your fishes", 20, 5, 15, "Fish");
+            ItemStruct fishFood = new ItemStruct("FishFood", "A mineral rich meal for your fishes", 20, 5, 15, "fish");
             items["fishfood"] = fishFood;
             _items.Add(fishFood);
         }
 
         private void DogFood()
         {
-            ItemStruct dogFood = new ItemStruct("DogFood", "High protein food for good dogs", 20, -5, 5, "Dog");
+            ItemStruct dogFood = new ItemStruct("DogFood", "High protein food for good dogs", 20, -5, 5, "dog");
             items["dogfood"] = dogFood;
             _items.Add(dogFood);
         }
         private void Salmon()
         {
-            ItemStruct salmon = new ItemStruct("Salmon", "A delicious salmon for your cat", 20, -5, 5, "Cat");
+            ItemStruct salmon = new ItemStruct("Salmon", "A delicious salmon for your cat", 20, -5, 5, "cat");
             items["salmon"] = salmon;
             _items.Add(salmon);
         }
 
         private void Carrot()
         {
-            ItemStruct carrot = new ItemStruct("Carrot", "It's Carrot... for bunnies..", 20, -5, 5, "Rabbit");
+            ItemStruct carrot = new ItemStruct("Carrot", "It's Carrot... for bunnies..", 20, -5, 5, "rabbit");
             items["carrot"] = carrot;
             _items.Add(carrot);
         }
         private void Peanut()
         {
-            ItemStruct peanut = new ItemStruct("Peanut", "Hansters love peanuts", 20, -5, 5, "Hamster");
+            ItemStruct peanut = new ItemStruct("Peanut", "Hansters love peanuts", 20, -5, 5, "hamster");
             items["peanut"] = peanut;
             _items.Add(peanut);
         }
@@ -103,21 +103,21 @@ namespace Pro
         #region Toys
         private void String()
         {
-            ItemStruct String = new ItemStruct("String", "Cats love playing with strings", -5, -5, 20, "Cat");
+            ItemStruct String = new ItemStruct("String", "Cats love playing with strings", -5, -5, 20, "cat");
             items["string"] = String;
             _items.Add(String);
         }
 
         private void Laser()
         {
-            ItemStruct laser = new ItemStruct("Laser", "A good, enjoy toy for cats", -5, -5, 20, "Cat");
+            ItemStruct laser = new ItemStruct("Laser", "A good, enjoy toy for cats", -5, -5, 20, "cat");
             items["laser"] = laser;
             _items.Add(laser);
         }
 
         private void HamsterWheel()
         {
-            ItemStruct HamsterWheel = new ItemStruct("HamsterWheel", "Hamsters can", -5, -5, 20, "Hamster");
+            ItemStruct HamsterWheel = new ItemStruct("HamsterWheel", "Hamsters can", -5, -5, 20, "hamster");
             items["hamsterwheel"] = HamsterWheel;
             _items.Add(HamsterWheel);
         }

@@ -35,6 +35,7 @@ namespace Pro
 
         public void start()
         {
+            Console.Clear();
             CreateList();
             sortby = new ListSortBy(animals, this);
 
