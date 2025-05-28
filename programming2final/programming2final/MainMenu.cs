@@ -14,8 +14,6 @@ namespace Pro
         private bool isOnMainMenu;
         
         private int colouredLine = 3;
-        private int flowDelay = 200;
-        private string status = "menu";
         public MainMenu() { isOnMainMenu = true; }
 
         async public Task MainFlow()
@@ -56,7 +54,7 @@ namespace Pro
             {
                 Console.Clear();
                 PrintStrings(colouredLine);
-                await Task.Delay(flowDelay);
+                await Task.Delay(FlowDelay);
             }
         }
         

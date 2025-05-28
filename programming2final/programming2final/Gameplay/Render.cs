@@ -12,7 +12,6 @@ namespace Pro
 {
     internal class Render : Game 
     {
-        private int flowDelay = 200;
         private float decreaseRate = 0.1f;
         private int counter = 0;
         
@@ -37,17 +36,21 @@ namespace Pro
         
         private void CheckInput()
         {
+
             numberPressed = 0;
             while (IsProgramRunning)
             {
+                AnimaStruct animal = GetCurrentAnimal();
+                float[] animalStat = GetCurrentAnimalsStats();
+
                 if (Console.KeyAvailable) // In this part I got some help from "claude.ai"
                 {
                     ConsoleKey keyPressed = Console.ReadKey(true).Key;
 
-                    if (playerCommand.isBusy == false)
+                    if (animalStat[3] < 1)
                     {
                         // if (keyPressed == ConsoleKey.F && playerCommand.isFeeding == false) { playerCommand.Feed(20, 5000); }
-                        if (keyPressed == ConsoleKey.G && GPressed == false) { GPressed = true; }
+                        if (keyPressed == ConsoleKey.G && GPressed == false) { GPressed = true;  }
                         if (keyPressed == ConsoleKey.E && EPressed == false) { EPressed = true; }
                     }                  
 
@@ -71,18 +74,20 @@ namespace Pro
         {
             while (IsProgramRunning)
             {
-                if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
-                if (AnimalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
+                AnimaStruct animal = GetCurrentAnimal();
+                float[] animalStat = GetCurrentAnimalsStats();
 
                 Console.Clear();
+                if (animalStat[3] == 1) { Console.Write("[Sleeping] "); }
                 Console.Write($"{animal.Colour} {animal.Type} Hunger:{(int)animalStat[0]}| Sleep:{(int)animalStat[1]}| Fun:{(int)animalStat[2]}\n");
                 // Console.WriteLine(animal.HungerScaling + " " +  animal.SleepScaling + " " + animal.FunScaling);
                 // Console.WriteLine(GPressed + " " + EPressed + " " + counter);
 
                 PrintInputs();
 
-                if (playerCommand.isFeeding == true) { Console.WriteLine($"You are currently feeding an animal"); }
+                if (playerCommand.isFeeding == true) { Console.WriteLine($"You are currently feeding {playerCommand.animalName}"); }
                 if (playerCommand.isExecutingAnEvent == true) { Console.WriteLine($"You are currently executing an event"); }
+                if (playerCommand.isItemUsed) { Console.WriteLine($"You are currently using {playerCommand.itemName} on {playerCommand.animalName}"); }
                 if (GPressed || EPressed == true) { Console.WriteLine($"Game stopped"); }
                 Console.WriteLine("");
 
@@ -93,13 +98,15 @@ namespace Pro
                 EPressedCounterManager();
                 
                 ApplyStatus();
-                await Task.Delay(flowDelay);
+                await Task.Delay(FlowDelay);
             }
 
         }
 
         private void PrintInventory() // not async for now // inputs are not working properly 
         {
+            AnimaStruct animal = GetCurrentAnimal();
+            float[] animalStat = GetCurrentAnimalsStats();
             if (GPressed)
             {
                 for (int i = 0; i < Inventory.Count; i = i + 1)
@@ -111,9 +118,8 @@ namespace Pro
                     if (numberPressed != 0)
                     {
                         counter = 0;
-                        playerCommand.InventoryController(numberPressed);
+                        playerCommand.InventoryController(numberPressed, animal, animalStat);
                         numberPressed = 0;
-                        playerCommand.isBusy = true;
                         GPressed = false;
                         break;
                     }
@@ -125,6 +131,8 @@ namespace Pro
 
         private void PrintBehaviours() // not async for now // inputs are not working properly 
         {
+            AnimaStruct animal = GetCurrentAnimal();
+            float[] animalStat = GetCurrentAnimalsStats();
             if (EPressed)
             {
                 for (int i = 0; i < playerCommand.behaviours.Count(); i = i + 1)
@@ -136,9 +144,8 @@ namespace Pro
                     if (numberPressed != 0)
                     {
                         counter = 0;
-                        playerCommand.EventController(numberPressed);
+                        playerCommand.EventController(numberPressed, animal, animalStat);
                         numberPressed = 0;
-                        playerCommand.isBusy = true;
                         EPressed = false;
                         break;
                     }
@@ -172,7 +179,7 @@ namespace Pro
         
         private void ApplyStatus()
         {
-            int divideBy = 80;
+            int divideBy = 100;
             
             if (AnimalSelected.TryGetValue(1, out AnimaStruct animal1)) { }
             if (AnimalSelected.TryGetValue(2, out AnimaStruct animal2)) { }
@@ -194,7 +201,19 @@ namespace Pro
             statsOfThirdAnimal[1] = statsOfThirdAnimal[1] - decreaseRate * animal3.SleepScaling * DifficultyMultiplier / divideBy;
             statsOfThirdAnimal[2] = statsOfThirdAnimal[2] - decreaseRate * animal3.FunScaling * DifficultyMultiplier / divideBy;
 
-            Thread.Sleep(flowDelay);
+            Thread.Sleep(FlowDelay);
+        }
+
+        private AnimaStruct GetCurrentAnimal()
+        {
+            if (AnimalSelected.TryGetValue(CurrentAnimal, out AnimaStruct animal)) { }
+            return animal;
+        }
+
+        private float[] GetCurrentAnimalsStats()
+        {
+            if (AnimalStatus.TryGetValue(CurrentAnimal, out float[] animalStat)) { }
+            return animalStat;
         }
     }
 }

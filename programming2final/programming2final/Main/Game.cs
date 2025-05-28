@@ -11,16 +11,18 @@ namespace Pro
     {
         public static bool IsProgramRunning = true;
         
-        public static Write wr = new Write();
         public static Render Render = new Render();
+        public static Printer Printer = new Printer();
 
         public static int CurrentAnimal;
-        public static float DifficultyMultiplier;
+        public static float DifficultyMultiplier = 1f;
 
         public static Dictionary<int, AnimaStruct> AnimalSelected;
         public static Dictionary<int, float[]> AnimalStatus = new Dictionary<int, float[]>();
 
         public static List<ItemStruct> Inventory = new List<ItemStruct>();
+
+        public static int FlowDelay = 200;
         public Game()
         {
             

@@ -19,7 +19,6 @@ namespace Pro
         
         public void chooseSortby()
         {
-            Console.WriteLine("Please choose the element that you want to sort");
             Console.WriteLine("You may sort by: [Fun, Hunger, Sleep]");
             string sortbyOpionSelect = Console.ReadLine().ToLower();
             switch (sortbyOpionSelect) 

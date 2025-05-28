@@ -126,7 +126,7 @@ namespace Pro
                     animals.Remove(pickedAnimal);
                     animaDict.Remove(animalName);
                     AnimalSelected[animalCount] = pickedAnimal;
-                    AnimalStatus[animalCount] = [pickedAnimal.Hunger, pickedAnimal.Sleep, pickedAnimal.Fun];
+                    AnimalStatus[animalCount] = [pickedAnimal.Hunger, pickedAnimal.Sleep, pickedAnimal.Fun, 0];
                     PrintList(animals);
                     animalCount = animalCount - 1;
                     Console.WriteLine(animalCount);
