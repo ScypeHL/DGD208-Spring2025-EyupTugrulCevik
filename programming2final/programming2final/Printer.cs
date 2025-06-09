@@ -13,6 +13,7 @@ namespace Pro
         private int colouredLine;
         public Action takeAction;
         private bool onStage = true;
+        private string output;
 
         public Printer() { }
 
@@ -26,10 +27,17 @@ namespace Pro
         {
             stringsHighlighted.Add(text);
         }
+        
+        public void Clear()
+        {
+            strings.Clear();
+            stringsHighlighted.Clear();
+        }
         #endregion
 
         public async void MainFlow()
         {
+            onStage = true;
             var printer = Task.Run(Print);
 
             colouredLine = strings.Count + 2;
@@ -48,7 +56,7 @@ namespace Pro
 
                     if (keyPressed == ConsoleKey.UpArrow) { colouredLine = colouredLine - 1; }
                     if (keyPressed == ConsoleKey.DownArrow) { colouredLine = colouredLine + 1; }
-                    if (keyPressed == ConsoleKey.Enter) { Execute(stringsHighlighted[colouredLine - 2 - strings.Count]); }
+                    if (keyPressed == ConsoleKey.Enter) { onStage = false; output = (stringsHighlighted[colouredLine - 2 - strings.Count]); Clear(); }
 
                 }
             }
@@ -87,9 +95,9 @@ namespace Pro
             }
         }
 
-        private void Execute(string context)
+        public string Execute()
         {
-            if (context == stringsHighlighted[0]) { }
+            return output;
         }
     }
 }

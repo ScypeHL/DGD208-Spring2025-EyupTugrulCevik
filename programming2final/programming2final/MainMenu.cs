@@ -14,6 +14,7 @@ namespace Pro
         private bool isOnMainMenu;
         
         private int colouredLine = 3;
+        private int startPaintAt = 3;
         public MainMenu() { isOnMainMenu = true; }
 
         async public Task MainFlow()
@@ -35,7 +36,7 @@ namespace Pro
         {
             while (isOnMainMenu)
             {
-                colouredLine = Math.Clamp(colouredLine, 3, strings.Count);
+                colouredLine = Math.Clamp(colouredLine, startPaintAt, strings.Count);
                 if (Console.KeyAvailable)
                 {
                     ConsoleKey keyPressed = Console.ReadKey(true).Key;
@@ -93,6 +94,9 @@ namespace Pro
                 case "Options":
                     SetUpOptionsMenu();
                     break;
+                case "Credits":
+                    Credits();
+                    break;
                 case "Back to Main Menu":
                     SetUpMainMenu();
                     break;
@@ -119,6 +123,7 @@ namespace Pro
         private void SetUpMainMenu()
         {
             colouredLine = 3;
+            startPaintAt = 3;
             strings.Clear();
             AddStrings("Welcome To Animal Manager");
             AddStrings("");
@@ -146,6 +151,20 @@ namespace Pro
             AddStrings("Easy");
             AddStrings("Medium");
             AddStrings("Hard");
+        }
+
+        private void Credits()
+        {
+            colouredLine = 7;
+            startPaintAt = 7;
+            strings.Clear();
+            AddStrings("This game is made by Eyup Tugrul Cevik - 2305041011");
+            AddStrings("In this project small amount of code provided by 'claude.ai' is used");
+            AddStrings("Some ideas from internet and from people around is used but not copied");
+            AddStrings("Everything that is not marked as 'AI made' is written by me");
+            AddStrings("'I saw that main menu thing from burak'");
+            AddStrings("");
+            AddStrings("Back to Main Menu");
         }
     }
 }

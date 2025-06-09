@@ -9,9 +9,12 @@ namespace Pro
 {
     internal class PlayerCommand : Game
     {
+        private event Action<int, float[]> InventoryHandler;
+        
         public bool isFeeding = false;
         public bool isExecutingAnEvent = false;
         public bool isItemUsed = false;
+        
         public string animalName;
         public string itemName;
 
@@ -50,28 +53,19 @@ namespace Pro
             {
                 if (Inventory[numberInput - 1].CanBeUsedOn == animal.Type.ToLower())
                 {
-                    itemName = Inventory[numberInput - 1].Name;
-                    if (Inventory[numberInput - 1].HungerIncrease > 0)
+                    if (Inventory[numberInput - 1].RequiresSomeoneToUse == false)
                     {
-                        isFeeding = true;
-                        animalStat[3] = 2; // animal is doing something
-                        await Task.Delay(5000);
-                        animalStat[0] = animalStat[0] + Inventory[numberInput - 1].HungerIncrease;
-                        animalStat[1] = animalStat[1] + Inventory[numberInput - 1].SleepIncrease;
-                        animalStat[2] = animalStat[2] + Inventory[numberInput - 1].FunIncrease;
-                        isFeeding = false;
-                        animalStat[3] = 0;
+                        itemName = Inventory[numberInput - 1].Name;
+                        AddCommandToAction();
+                        InventoryHandler?.Invoke(numberInput, animalStat);
+                        itemName = Inventory[numberInput - 1].Name;
                     }
                     else
                     {
-                        isItemUsed = true;
-                        animalStat[3] = 2; // animal is doing something
-                        await Task.Delay(5000);
-                        animalStat[0] = animalStat[0] + Inventory[numberInput - 1].HungerIncrease;
-                        animalStat[1] = animalStat[1] + Inventory[numberInput - 1].SleepIncrease;
-                        animalStat[2] = animalStat[2] + Inventory[numberInput - 1].FunIncrease;
-                        isItemUsed = false;
-                        animalStat[3] = 0;
+                        isExecutingAnEvent = true;
+                        AddCommandToAction();
+                        InventoryHandler?.Invoke(numberInput, animalStat);
+                        itemName = Inventory[numberInput - 1].Name;
                     }
                 }
             }
@@ -81,6 +75,7 @@ namespace Pro
         async public void EventController(int numberInput, AnimaStruct animal, float[] animalStat)
         {
             animalName = animal.Type;
+            isExecutingAnEvent = true;
             switch (numberInput)
             {
                 case 1:
@@ -88,8 +83,8 @@ namespace Pro
                     break;
                 case 2:
                     animalStat[3] = 1; // animal is sleeping
-                    EventHandler(12000, -5, 30, 0, animal);
                     isExecutingAnEvent = false;
+                    EventHandler(12000, -5, 30, 0, animal);
                     break;
                 case 3:
                     animalStat[3] = 2;
@@ -99,7 +94,6 @@ namespace Pro
 
             async void EventHandler(int delay, int hungerIncrease, int sleepIncrease, int funIncrease, AnimaStruct animaStruct)
             {
-                isExecutingAnEvent = true;
                 await Task.Delay(delay);
                 
                 animalStat[0] = animalStat[0] + hungerIncrease;
@@ -119,6 +113,37 @@ namespace Pro
             {
                 if (AnimalSelected.TryGetValue(i, out AnimaStruct _animal)) { Console.WriteLine(_animal.Type); }
             }
+        }
+
+        private void AddCommandToAction()
+        {
+            InventoryHandler += async(numberInput, animalStat) =>
+            {
+                if (Inventory[numberInput - 1].HungerIncrease > 0)
+                {
+                    isFeeding = true;
+                    animalStat[3] = 2; // animal is doing something
+                    await Task.Delay(5000);
+                    animalStat[0] = animalStat[0] + Inventory[numberInput - 1].HungerIncrease;
+                    animalStat[1] = animalStat[1] + Inventory[numberInput - 1].SleepIncrease;
+                    animalStat[2] = animalStat[2] + Inventory[numberInput - 1].FunIncrease;
+                    isFeeding = false;
+                    animalStat[3] = 0;
+                    isExecutingAnEvent = false;
+                }
+                else
+                {
+                    isItemUsed = true;
+                    animalStat[3] = 2; // animal is doing something
+                    await Task.Delay(5000);
+                    animalStat[0] = animalStat[0] + Inventory[numberInput - 1].HungerIncrease;
+                    animalStat[1] = animalStat[1] + Inventory[numberInput - 1].SleepIncrease;
+                    animalStat[2] = animalStat[2] + Inventory[numberInput - 1].FunIncrease;
+                    isItemUsed = false;
+                    animalStat[3] = 0;
+                    isExecutingAnEvent = false;
+                }
+            };
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pro
 {
-    internal class ListSortBy
+    internal class ListSortBy:Game
     {
         private AnimalPick animalpick;
         private List<AnimaStruct> animals_;
@@ -19,17 +19,22 @@ namespace Pro
         
         public void chooseSortby()
         {
-            Console.WriteLine("You may sort by: [Fun, Hunger, Sleep]");
-            string sortbyOpionSelect = Console.ReadLine().ToLower();
+            Printer.Get("(Descending) You may sort by:");
+            Printer.GetHighlighted("[Hunger]");
+            Printer.GetHighlighted("[Sleep]");
+            Printer.GetHighlighted("[Fun]");
+            Printer.MainFlow();
+
+            string sortbyOpionSelect = Printer.Execute();
             switch (sortbyOpionSelect) 
             {
-                case "fun":
+                case "[Fun]":
                     animalpick.sortOption += () => sortbyFun(animals_);
                     break;
-                case "sleep":
+                case "[Sleep]":
                     animalpick.sortOption += () => sortbySleep(animals_);
                     break;
-                case "hunger":
+                case "[Hunger]":
                     animalpick.sortOption += () => sortbyHunger(animals_);
                     break;
                 default:

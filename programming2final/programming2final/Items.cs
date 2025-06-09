@@ -24,7 +24,9 @@ namespace Pro
             String();
             Laser();
             HamsterWheel();
-            
+            RollyTeaser();
+
+
             applyItems();
         }
 
@@ -62,39 +64,39 @@ namespace Pro
         #region Foods
         private void BirdFood()
         {
-            ItemStruct birdFood = new ItemStruct("BirdFood", "A mineral rich meal for your birds", 20, -5, 5,  "parrot" );
+            ItemStruct birdFood = new ItemStruct("BirdFood", "A mineral rich meal for your birds", 20, -5, 5,  "parrot", false);
             items["birdfood"] = birdFood;
             _items.Add(birdFood);
         }
         private void FishFood()
         {
-            ItemStruct fishFood = new ItemStruct("FishFood", "A mineral rich meal for your fishes", 20, 5, 15, "fish");
+            ItemStruct fishFood = new ItemStruct("FishFood", "A mineral rich meal for your fishes", 20, 5, 15, "fish", false);
             items["fishfood"] = fishFood;
             _items.Add(fishFood);
         }
 
         private void DogFood()
         {
-            ItemStruct dogFood = new ItemStruct("DogFood", "High protein food for good dogs", 20, -5, 5, "dog");
+            ItemStruct dogFood = new ItemStruct("DogFood", "High protein food for good dogs", 20, -5, 5, "dog", false);
             items["dogfood"] = dogFood;
             _items.Add(dogFood);
         }
         private void Salmon()
         {
-            ItemStruct salmon = new ItemStruct("Salmon", "A delicious salmon for your cat", 20, -5, 5, "cat");
+            ItemStruct salmon = new ItemStruct("Salmon", "A delicious salmon for your cat", 20, -5, 5, "cat", false);
             items["salmon"] = salmon;
             _items.Add(salmon);
         }
 
         private void Carrot()
         {
-            ItemStruct carrot = new ItemStruct("Carrot", "It's Carrot... for bunnies..", 20, -5, 5, "rabbit");
+            ItemStruct carrot = new ItemStruct("Carrot", "It's Carrot... for bunnies..", 20, -5, 5, "rabbit", false);
             items["carrot"] = carrot;
             _items.Add(carrot);
         }
         private void Peanut()
         {
-            ItemStruct peanut = new ItemStruct("Peanut", "Hansters love peanuts", 20, -5, 5, "hamster");
+            ItemStruct peanut = new ItemStruct("Peanut", "Hansters love peanuts", 20, -5, 5, "hamster", false);
             items["peanut"] = peanut;
             _items.Add(peanut);
         }
@@ -103,23 +105,37 @@ namespace Pro
         #region Toys
         private void String()
         {
-            ItemStruct String = new ItemStruct("String", "Cats love playing with strings", -5, -5, 20, "cat");
+            ItemStruct String = new ItemStruct("String", "Cats love playing with strings", -5, -5, 20, "cat", true);
             items["string"] = String;
             _items.Add(String);
         }
 
         private void Laser()
         {
-            ItemStruct laser = new ItemStruct("Laser", "A good, enjoy toy for cats", -5, -5, 20, "cat");
+            ItemStruct laser = new ItemStruct("Laser", "A good, enjoy toy for cats", -5, -5, 20, "cat", true);
             items["laser"] = laser;
             _items.Add(laser);
         }
 
         private void HamsterWheel()
         {
-            ItemStruct HamsterWheel = new ItemStruct("HamsterWheel", "Hamsters can", -5, -5, 20, "hamster");
+            ItemStruct HamsterWheel = new ItemStruct("HamsterWheel", "Hamsters can buil-d musc-...", -5, -5, 20, "hamster", false);
             items["hamsterwheel"] = HamsterWheel;
             _items.Add(HamsterWheel);
+        }
+        
+        private void RollyTeaser()
+        {
+            ItemStruct RollyTeaser = new ItemStruct("RollyTeaser", "An enjoyable meal plate for your rabbit", 10, -10, 10, "hamster", false);
+            items["rollyteaser"] = RollyTeaser;
+            _items.Add(RollyTeaser);
+        }
+
+        private void LemmingPlushie()
+        {
+            ItemStruct LemmingPlushie = new ItemStruct("LemmingPlushie", "Your dog will love to play with it", -5, -5, 5, "hamster", false);
+            items["lemmingplushie"] = LemmingPlushie;
+            _items.Add(LemmingPlushie);
         }
         #endregion
     }

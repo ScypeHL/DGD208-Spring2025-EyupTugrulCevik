@@ -22,7 +22,7 @@ namespace Pro
 
         public static List<ItemStruct> Inventory = new List<ItemStruct>();
 
-        public static int FlowDelay = 200;
+        public static int FlowDelay = 300;
         public Game()
         {
             

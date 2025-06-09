@@ -12,7 +12,7 @@ namespace Pro
 {
     internal class Render : Game 
     {
-        private float decreaseRate = 0.1f;
+        private float decreaseRate = 0.1f; // decrease rate of "Hunger Sleep Fun"
         private int counter = 0;
         
         private bool GPressed = false;
@@ -47,10 +47,10 @@ namespace Pro
                 {
                     ConsoleKey keyPressed = Console.ReadKey(true).Key;
 
-                    if (animalStat[3] < 1)
+                    if (animalStat[3] == 0 && playerCommand.isExecutingAnEvent == false)
                     {
                         // if (keyPressed == ConsoleKey.F && playerCommand.isFeeding == false) { playerCommand.Feed(20, 5000); }
-                        if (keyPressed == ConsoleKey.G && GPressed == false) { GPressed = true;  }
+                        if (keyPressed == ConsoleKey.G && GPressed == false) { GPressed = true; }
                         if (keyPressed == ConsoleKey.E && EPressed == false) { EPressed = true; }
                     }                  
 
@@ -79,6 +79,7 @@ namespace Pro
 
                 Console.Clear();
                 if (animalStat[3] == 1) { Console.Write("[Sleeping] "); }
+                if (animalStat[3] == 3) { Console.Write("[Animal Collapsed] "); }
                 Console.Write($"{animal.Colour} {animal.Type} Hunger:{(int)animalStat[0]}| Sleep:{(int)animalStat[1]}| Fun:{(int)animalStat[2]}\n");
                 // Console.WriteLine(animal.HungerScaling + " " +  animal.SleepScaling + " " + animal.FunScaling);
                 // Console.WriteLine(GPressed + " " + EPressed + " " + counter);
@@ -111,7 +112,7 @@ namespace Pro
             {
                 for (int i = 0; i < Inventory.Count; i = i + 1)
                 {
-                    Console.WriteLine($"{i + 1}) {Inventory[i].Name}");
+                    Console.WriteLine($"{i + 1}) {Inventory[i].Name} > can be used on '{Inventory[i].CanBeUsedOn}'");
                 }
                 while (counter < 10)
                 {
@@ -123,6 +124,8 @@ namespace Pro
                         GPressed = false;
                         break;
                     }
+                    
+                    
                     Task.Delay(10);
                 }
                 GPressed = false;
@@ -188,18 +191,30 @@ namespace Pro
             if (AnimalStatus.TryGetValue(1, out float[] statsOfFirstAnimal)) { }
             if (AnimalStatus.TryGetValue(2, out float[] statsOfSecondAnimal)) { }
             if (AnimalStatus.TryGetValue(3, out float[] statsOfThirdAnimal)) { }
-            
-            statsOfFirstAnimal[0] = statsOfFirstAnimal[0] - decreaseRate * animal1.HungerScaling * DifficultyMultiplier / divideBy;
-            statsOfFirstAnimal[1] = statsOfFirstAnimal[1] - decreaseRate * animal1.SleepScaling * DifficultyMultiplier / divideBy;
-            statsOfFirstAnimal[2] = statsOfFirstAnimal[2] - decreaseRate * animal1.FunScaling * DifficultyMultiplier / divideBy;
 
-            statsOfSecondAnimal[0] = statsOfSecondAnimal[0] - decreaseRate * animal2.HungerScaling * DifficultyMultiplier / divideBy;
-            statsOfSecondAnimal[1] = statsOfSecondAnimal[1] - decreaseRate * animal2.SleepScaling * DifficultyMultiplier / divideBy;
-            statsOfSecondAnimal[2] = statsOfSecondAnimal[2] - decreaseRate * animal2.FunScaling * DifficultyMultiplier / divideBy;
+            if (statsOfFirstAnimal[0] <= 0 ^ statsOfFirstAnimal[1] <= 0 ^ statsOfFirstAnimal[2] <= 0) { statsOfFirstAnimal[3] = 3; } // animal is collapsed
+            else
+            {
+                statsOfFirstAnimal[0] = statsOfFirstAnimal[0] - decreaseRate * animal1.HungerScaling * DifficultyMultiplier / divideBy;
+                statsOfFirstAnimal[1] = statsOfFirstAnimal[1] - decreaseRate * animal1.SleepScaling * DifficultyMultiplier / divideBy;
+                statsOfFirstAnimal[2] = statsOfFirstAnimal[2] - decreaseRate * animal1.FunScaling * DifficultyMultiplier / divideBy;
+            }
 
-            statsOfThirdAnimal[0] = statsOfThirdAnimal[0] - decreaseRate * animal3.HungerScaling * DifficultyMultiplier / divideBy;
-            statsOfThirdAnimal[1] = statsOfThirdAnimal[1] - decreaseRate * animal3.SleepScaling * DifficultyMultiplier / divideBy;
-            statsOfThirdAnimal[2] = statsOfThirdAnimal[2] - decreaseRate * animal3.FunScaling * DifficultyMultiplier / divideBy;
+            if (statsOfSecondAnimal[0] <= 0 ^ statsOfSecondAnimal[1] <= 0 ^ statsOfSecondAnimal[2] <= 0) { statsOfSecondAnimal[3] = 3; }
+            else
+            {
+                statsOfSecondAnimal[0] = statsOfSecondAnimal[0] - decreaseRate * animal2.HungerScaling * DifficultyMultiplier / divideBy;
+                statsOfSecondAnimal[1] = statsOfSecondAnimal[1] - decreaseRate * animal2.SleepScaling * DifficultyMultiplier / divideBy;
+                statsOfSecondAnimal[2] = statsOfSecondAnimal[2] - decreaseRate * animal2.FunScaling * DifficultyMultiplier / divideBy;
+            }
+
+            if (statsOfThirdAnimal[0] <= 0 ^ statsOfThirdAnimal[1] <= 0 ^ statsOfThirdAnimal[2] <= 0) { statsOfThirdAnimal[3] = 3; }
+            else
+            {
+                statsOfThirdAnimal[0] = statsOfThirdAnimal[0] - decreaseRate * animal3.HungerScaling * DifficultyMultiplier / divideBy;
+                statsOfThirdAnimal[1] = statsOfThirdAnimal[1] - decreaseRate * animal3.SleepScaling * DifficultyMultiplier / divideBy;
+                statsOfThirdAnimal[2] = statsOfThirdAnimal[2] - decreaseRate * animal3.FunScaling * DifficultyMultiplier / divideBy;
+            }
 
             Thread.Sleep(FlowDelay);
         }
